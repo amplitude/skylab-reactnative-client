@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SkylabReactnativeClientPackage implements ReactPackage {
+public class SkylabReactNativeClientPackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new SkylabReactnativeClientModule(reactContext));
+        modules.add(new SkylabReactNativeClientModule(reactContext));
         return modules;
     }
 

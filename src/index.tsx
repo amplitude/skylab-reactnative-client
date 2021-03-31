@@ -1,9 +1,9 @@
 import { NativeModules } from 'react-native';
 
-type SkylabReactnativeClientType = {
+type SkylabReactNativeClientType = {
   multiply(a: number, b: number): Promise<number>;
 };
 
-const { SkylabReactnativeClient } = NativeModules;
+const { SkylabReactNativeClient } = NativeModules;
 
-export default SkylabReactnativeClient as SkylabReactnativeClientType;
+export default SkylabReactNativeClient as SkylabReactNativeClientType;

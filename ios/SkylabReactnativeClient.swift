@@ -1,5 +1,5 @@
-@objc(SkylabReactnativeClient)
-class SkylabReactnativeClient: NSObject {
+@objc(SkylabReactNativeClient)
+class SkylabReactNativeClient: NSObject {
 
     @objc(multiply:withB:withResolver:withRejecter:)
     func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {

@@ -18,11 +18,11 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('SkylabReactnativeClient_compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('SkylabReactnativeClient_buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('SkylabReactNativeClient_compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('SkylabReactNativeClient_buildToolsVersion', '29.0.2')
     defaultConfig {
-        minSdkVersion safeExtGet('SkylabReactnativeClient_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('SkylabReactnativeClient_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('SkylabReactNativeClient_minSdkVersion', 16)
+        targetSdkVersion safeExtGet('SkylabReactNativeClient_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
 

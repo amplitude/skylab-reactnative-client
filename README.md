@@ -11,11 +11,11 @@ npm install skylab-reactnative-client
 ## Usage
 
 ```js
-import SkylabReactnativeClient from "skylab-reactnative-client";
+import SkylabReactNativeClient from "skylab-reactnative-client";
 
 // ...
 
-const result = await SkylabReactnativeClient.multiply(3, 7);
+const result = await SkylabReactNativeClient.multiply(3, 7);
 ```
 
 ## Contributing

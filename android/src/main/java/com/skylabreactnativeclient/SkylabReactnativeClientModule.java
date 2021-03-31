@@ -8,11 +8,11 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
 
-@ReactModule(name = SkylabReactnativeClientModule.NAME)
-public class SkylabReactnativeClientModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "SkylabReactnativeClient";
+@ReactModule(name = SkylabReactNativeClientModule.NAME)
+public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
+    public static final String NAME = "SkylabReactNativeClient";
 
-    public SkylabReactnativeClientModule(ReactApplicationContext reactContext) {
+    public SkylabReactNativeClientModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 

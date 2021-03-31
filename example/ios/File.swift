@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  SkylabReactnativeClientExample
+//  SkylabReactNativeClientExample
 //
 
 import Foundation
