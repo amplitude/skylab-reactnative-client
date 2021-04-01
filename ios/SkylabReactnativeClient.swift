@@ -14,11 +14,6 @@ class SkylabReactNativeClient: NSObject {
         let config = SkylabConfig()
         let _ = Skylab.initialize(apiKey: apiKey, config: config)
     }
-
-    // REMAINING ONES
-//    public void getVariant(String flagKey, ReadableMap fallback, Promise promise)
-//    public void getVariant(String flagKey, String fallback, Promise promise)
-//    public void refetchAll(Promise promise)
     
     @objc
     func start(_ callback: RCTResponseSenderBlock?,
@@ -59,10 +54,25 @@ class SkylabReactNativeClient: NSObject {
     
     @objc
     func getVariant(_ flagKey: String,
-                    callback: RCTResponseSenderBlock?,
+                    fallback: String,
                     resolver resolve: RCTPromiseResolveBlock,
                     rejecter reject: RCTPromiseRejectBlock) -> Void {
-        let variant = Skylab.getInstance()?.getVariant(flagKey, fallback: nil)
+        let variant = Skylab.getInstance()?.getVariant(flagKey, fallback: fallback)
+        
+        var variantMap = [String: Any]()
+        variantMap["value"] = variant?.value
+        variantMap["payload"] = variant?.payload
+        resolve(variantMap)
+    }
+    
+    @objc
+    func getVariant(_ flagKey: String,
+                    fallbackPayload: [String: Any],
+                    resolver resolve: RCTPromiseResolveBlock,
+                    rejecter reject: RCTPromiseRejectBlock) -> Void {
+        let fallbackVariant = Variant.init(fallbackPayload["value"] as! String, payload: fallbackPayload["payload"])
+        
+        let variant = Skylab.getInstance()?.getVariant(flagKey, fallback: fallbackVariant)
         
         var variantMap = [String: Any]()
         variantMap["value"] = variant?.value
@@ -87,5 +97,14 @@ class SkylabReactNativeClient: NSObject {
         } else {
             resolve(nil)
         }
+    }
+    
+    @objc
+    func refetchAll(_ callback: RCTResponseSenderBlock?,
+                    resolver resolve: RCTPromiseResolveBlock,
+                    rejecter reject: RCTPromiseRejectBlock) -> Void {
+        Skylab.getInstance()?.refetchAll(completion: {
+            callback?(["success"])
+        })
     }
 }
