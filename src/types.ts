@@ -25,8 +25,7 @@ export interface SkylabReactNativeClientModule {
   initialize(apiKey: string): Promise<boolean>;
   start(callback: Function): Promise<boolean>;
   setUser(user: SkylabUser, callback: Function): Promise<boolean>;
-  getVariant(flagKey: string): Promise<boolean>;
-  getVariant(flagKey: string, fallback: string | Variant): Promise<boolean>;
+  getVariant(flagKey: string, fallback?: Variant | string): Promise<boolean>;
   getVariants(): Promise<boolean>;
   refetchAll(callback: Function): Promise<boolean>;
 }

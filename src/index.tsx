@@ -25,12 +25,7 @@ export class Skylab {
   }
 
   getVariant(flagKey: string, fallback?: Variant | string): Promise<boolean> {
-    if (
-      fallback &&
-      (typeof fallback === 'string' || typeof fallback === 'object')
-    )
-      return SkylabReactNativeClient.getVariant(flagKey, fallback);
-    return SkylabReactNativeClient.getVariant(flagKey);
+    return SkylabReactNativeClient.getVariant(flagKey, fallback);
   }
 
   getVariants(): Promise<boolean> {
