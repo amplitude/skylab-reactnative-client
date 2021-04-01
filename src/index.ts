@@ -10,23 +10,23 @@ export class Skylab {
     return SkylabReactNativeClient.initialize(apiKey, config);
   }
 
-  start(promise: Promise<boolean>): Promise<boolean | void> {
+  start(_promise: Promise<boolean>): Promise<boolean | void> {
     return Promise.resolve();
   }
 
-  setUser(user: Object, promise: Promise<boolean>): Promise<boolean | void> {
+  setUser(_user: Object, _promise: Promise<boolean>): Promise<boolean | void> {
     return Promise.resolve();
   }
 
   getVariant(
-    promise: Promise<boolean>,
-    flagKey?: string,
-    fallback?: string | object,
+    _promise: Promise<boolean>,
+    _flagKey?: string,
+    _fallback?: string | object
   ): Promise<boolean | void> {
     return Promise.resolve();
   }
 
-  refetchAll(promise: Promise<boolean>): Promise<boolean | void> {
+  refetchAll(_promise: Promise<boolean>): Promise<boolean | void> {
     return Promise.resolve();
   }
 }

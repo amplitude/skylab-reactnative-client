@@ -1,15 +1,15 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import SkylabReactNativeClient from 'skylab-reactnative-client';
+import { Skylab } from 'skylab-reactnative-client';
 
 export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    if (SkylabReactNativeClient) {
+    if (Skylab) {
       setResult(
-        'Methods Exist: ' + Object.keys(SkylabReactNativeClient).join(', ')
+        'Skylab Exists: ' + Object.getOwnPropertyNames(Skylab.prototype)
       );
     }
   }, []);
