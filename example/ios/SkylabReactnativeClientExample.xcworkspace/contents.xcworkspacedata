@@ -8,6 +8,9 @@
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:SkylabReactnativeClientExample.xcodeproj">
+      location = "group:SkylabReactNativeClientExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SkylabReactNativeClientExample.xcodeproj">
    </FileRef>
 </Workspace>

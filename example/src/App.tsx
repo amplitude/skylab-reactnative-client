@@ -4,10 +4,13 @@ import { StyleSheet, View, Text } from 'react-native';
 import SkylabReactNativeClient from 'skylab-reactnative-client';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    SkylabReactNativeClient.multiply(3, 7).then(setResult);
+    console.warn({ SkylabReactNativeClient });
+    if (SkylabReactNativeClient) {
+      setResult('SkylabReactNativeClient exists');
+    }
   }, []);
 
   return (
