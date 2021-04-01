@@ -7,9 +7,10 @@ export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    console.warn({ SkylabReactNativeClient });
     if (SkylabReactNativeClient) {
-      setResult('SkylabReactNativeClient exists');
+      setResult(
+        'Methods Exist: ' + Object.keys(SkylabReactNativeClient).join(', ')
+      );
     }
   }, []);
 
