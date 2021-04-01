@@ -1,4 +1,5 @@
 import Foundation
+import Skylab
 
 @objc(SkylabReactNativeClient)
 class SkylabReactNativeClient: NSObject {
@@ -8,9 +9,9 @@ class SkylabReactNativeClient: NSObject {
 
     @objc
     func initialize(_ apiKey: String,
-                    config: [String: Any],
                     resolver resolve: RCTPromiseResolveBlock,
                     rejecter reject: RCTPromiseRejectBlock) -> Void {
-        
+        let config = SkylabConfig()
+        let _ = Skylab.initialize(apiKey: apiKey, config: config)
     }
 }

@@ -13,4 +13,7 @@
    <FileRef
       location = "group:SkylabReactNativeClientExample.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SkylabReactnativeClientExample.xcodeproj">
+   </FileRef>
 </Workspace>
