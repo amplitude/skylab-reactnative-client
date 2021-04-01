@@ -19,36 +19,12 @@ export class Skylab {
   }
 
   getVariant(
-    flagKey: string,
-    promise: Promise<boolean>
+    promise: Promise<boolean>,
+    flagKey?: string,
+    fallback?: string | object,
   ): Promise<boolean | void> {
     return Promise.resolve();
   }
-
-  getVariantWithObjectFallback(
-    flagKey: string,
-    fallback: object,
-    promise: Promise<boolean>
-  ): Promise<boolean | void> {
-    return Promise.resolve();
-  }
-  //public void getVariant(String flagKey, ReadableMap fallback, Promise promise)
-
-  getVariantWithStringFallback(
-    flagKey: string,
-    fallback: string,
-    promise: Promise<boolean>
-  ): Promise<boolean | void> {
-    return Promise.resolve();
-  }
-  //public void getVariant(String flagKey, String fallback, Promise promise)
-
-  getVariantWithOnlyPromise(
-    promise: Promise<boolean>
-  ): Promise<boolean | void> {
-    return Promise.resolve();
-  }
-  //public void getVariants(Promise promise)
 
   refetchAll(promise: Promise<boolean>): Promise<boolean | void> {
     return Promise.resolve();
