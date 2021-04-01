@@ -50,9 +50,14 @@ repositories {
     }
     google()
     jcenter()
+    maven {
+      url 'https://amplitude.jfrog.io/artifactory/libs-release'
+    }
 }
 
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.amplitude:skylab-android-client:1.0.1'
+    implementation 'com.amplitude:android-sdk:2.26.1'
 }
