@@ -8,7 +8,9 @@ export default function App() {
 
   React.useEffect(() => {
     if (Skylab) {
-      setResult('Methods Exist: ' + Object.keys(Skylab).join(', '));
+      setResult(
+        'Skylab Exists: ' + Object.getOwnPropertyNames(Skylab.prototype)
+      );
     }
   }, []);
 
