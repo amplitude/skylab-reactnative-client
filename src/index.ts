@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 import { SkylabUser } from './skylabUser';
-import type { SkylabReactNativeClientModule } from './types';
+import { SkylabReactNativeClientModule } from './types';
 
 type Variant = {
   value: string;
