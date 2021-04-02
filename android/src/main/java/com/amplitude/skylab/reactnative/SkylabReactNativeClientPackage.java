@@ -1,4 +1,4 @@
-package com.skylabreactnativeclient;
+package com.amplitude.skylab.reactnative;
 
 import androidx.annotation.NonNull;
 
