@@ -1,5 +1,5 @@
-package com.skylabreactnativeclient;
-import android.util.Log;
+package com.amplitude.skylab.reactnative;
+
 import android.app.Application;
 
 import androidx.annotation.NonNull;

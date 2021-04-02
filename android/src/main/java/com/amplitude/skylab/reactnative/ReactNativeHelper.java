@@ -1,4 +1,4 @@
-package com.skylabreactnativeclient;
+package com.amplitude.skylab.reactnative;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;

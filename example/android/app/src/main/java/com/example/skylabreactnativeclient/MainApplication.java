@@ -10,7 +10,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import com.skylabreactnativeclient.SkylabReactNativeClientPackage;
+import com.amplitude.skylab.reactnative.SkylabReactNativeClientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
