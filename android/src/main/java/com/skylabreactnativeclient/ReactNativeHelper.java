@@ -23,31 +23,33 @@ public class ReactNativeHelper {
 
     public static JSONObject convertMapToJson(ReadableMap value) throws JSONException {
         JSONObject properties = new JSONObject();
-        ReadableMapKeySetIterator iterator = value.keySetIterator();
-        while (iterator.hasNextKey()) {
-            String key = iterator.nextKey();
-            ReadableType valueType = value.getType(key);
-            switch (valueType) {
-                case Null:
-                    properties.put(key, JSONObject.NULL);
-                    break;
-                case Boolean:
-                    properties.put(key, value.getBoolean(key));
-                    break;
-                case Number:
-                    properties.put(key, value.getDouble(key));
-                    break;
-                case String:
-                    properties.put(key, value.getString(key));
-                    break;
-                case Map:
-                    properties.put(key, convertMapToJson(value.getMap(key)));
-                    break;
-                case Array:
-                    properties.put(key, convertArrayToJson(value.getArray(key)));
-                    break;
-                default:
-                    throw new IllegalArgumentException(UNSUPPORTED_TYPE + valueType);
+        if (value != null) {
+            ReadableMapKeySetIterator iterator = value.keySetIterator();
+            while (iterator.hasNextKey()) {
+                String key = iterator.nextKey();
+                ReadableType valueType = value.getType(key);
+                switch (valueType) {
+                    case Null:
+                        properties.put(key, JSONObject.NULL);
+                        break;
+                    case Boolean:
+                        properties.put(key, value.getBoolean(key));
+                        break;
+                    case Number:
+                        properties.put(key, value.getDouble(key));
+                        break;
+                    case String:
+                        properties.put(key, value.getString(key));
+                        break;
+                    case Map:
+                        properties.put(key, convertMapToJson(value.getMap(key)));
+                        break;
+                    case Array:
+                        properties.put(key, convertArrayToJson(value.getArray(key)));
+                        break;
+                    default:
+                        throw new IllegalArgumentException(UNSUPPORTED_TYPE + valueType);
+                }
             }
         }
         return properties;

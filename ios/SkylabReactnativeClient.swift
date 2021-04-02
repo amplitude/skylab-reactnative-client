@@ -17,10 +17,26 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func start(  resolver resolve: RCTPromiseResolveBlock,
+    func start(_ user: [String: Any],
+                 resolver resolve: RCTPromiseResolveBlock,
                  rejecter reject: RCTPromiseRejectBlock) -> Void {
-        let user = SkylabUser()
-        Skylab.getInstance()?.start(user: user, completion: {})
+        let u = SkylabUser(deviceId: user["device_id"] as! String?,
+                           userId: user["user_id"] as! String?,
+                           version: user["version"] as! String?,
+                           country: user["country"] as! String?,
+                           region: user["region"] as! String?,
+                           dma: user["dma"] as! String?,
+                           city: user["city"] as! String?,
+                           language: user["language"] as! String?,
+                           platform: user["platform"] as! String?,
+                           os: user["os"] as! String?,
+                           deviceFamily: user["device_family"] as! String?,
+                           deviceType: user["device_type"] as! String?,
+                           deviceManufacturer: user["device_manufacturer"] as! String?,
+                           deviceModel: user["device_model"] as! String?,
+                           carrier: user["carrier"] as! String?,
+                           userProperties: user["user_properties"] as! [String: String]?)
+        Skylab.getInstance()?.start(user: u, completion: {})
         resolve(true)
     }
     
@@ -51,6 +67,18 @@ class SkylabReactNativeClient: NSObject {
     
     @objc
     func getVariant(_ flagKey: String,
+                    resolver resolve: RCTPromiseResolveBlock,
+                    rejecter reject: RCTPromiseRejectBlock) -> Void {
+        let variant = Skylab.getInstance()?.getVariant(flagKey, fallback: nil)
+        
+        var variantMap = [String: Any]()
+        variantMap["value"] = variant?.value
+        variantMap["payload"] = variant?.payload
+        resolve(variantMap)
+    }
+
+    @objc
+    func getVariantWithFallback(_ flagKey: String,
                     fallback: String,
                     resolver resolve: RCTPromiseResolveBlock,
                     rejecter reject: RCTPromiseRejectBlock) -> Void {
@@ -63,7 +91,7 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func getVariant(_ flagKey: String,
+    func getVariantWithFallbackPayload(_ flagKey: String,
                     fallbackPayload: [String: Any],
                     resolver resolve: RCTPromiseResolveBlock,
                     rejecter reject: RCTPromiseRejectBlock) -> Void {
@@ -76,9 +104,10 @@ class SkylabReactNativeClient: NSObject {
         variantMap["payload"] = variant?.payload
         resolve(variantMap)
     }
-    
+
+
     @objc
-    func getVariants(  resolver resolve: RCTPromiseResolveBlock,
+    func getVariants(_ resolve: RCTPromiseResolveBlock,
                        rejecter reject: RCTPromiseRejectBlock) -> Void {
         let variants = Skylab.getInstance()?.getVariants()
         
@@ -97,7 +126,7 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func refetchAll(  resolver resolve: RCTPromiseResolveBlock,
+    func refetchAll(_ resolve: RCTPromiseResolveBlock,
                       rejecter reject: RCTPromiseRejectBlock) -> Void {
         Skylab.getInstance()?.refetchAll(completion: {})
         resolve(true)

@@ -16,16 +16,34 @@ export class Skylab {
     SkylabReactNativeClient.initialize(apiKey);
   }
 
-  start(): Promise<boolean> {
-    return SkylabReactNativeClient.start();
+  start(user: SkylabUser): Promise<boolean> {
+    return SkylabReactNativeClient.start(user.payload);
   }
 
   setUser(user: SkylabUser): Promise<boolean> {
     return SkylabReactNativeClient.setUser(user.payload);
   }
 
-  getVariant(flagKey: string, fallback?: Variant | string): Promise<boolean> {
-    return SkylabReactNativeClient.getVariant(flagKey, fallback);
+  getVariant(flagKey: string): Promise<boolean> {
+    //if (!fallback) {
+    // return SkylabReactNativeClient.getVariantNoFallback(flagKey);
+    //}
+    //console.log('2 element * ***** ');
+    return SkylabReactNativeClient.getVariant(flagKey);
+  }
+
+  getVariantWithFallback(flagKey: string, fallback: string): Promise<boolean> {
+    return SkylabReactNativeClient.getVariantWithFallback(flagKey, fallback);
+  }
+
+  getVariantWithFallbackPayload(
+    flagKey: string,
+    fallback: Variant
+  ): Promise<boolean> {
+    return SkylabReactNativeClient.getVariantWithFallbackPayload(
+      flagKey,
+      fallback
+    );
   }
 
   getVariants(): Promise<boolean> {
