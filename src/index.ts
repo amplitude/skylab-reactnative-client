@@ -12,16 +12,16 @@ const SkylabReactNativeClient: SkylabReactNativeClientModule =
 
 export { SkylabUser };
 export class Skylab {
-  init(apiKey: string): Promise<boolean> {
-    return SkylabReactNativeClient.initialize(apiKey);
+  init(apiKey: string): void {
+    SkylabReactNativeClient.initialize(apiKey);
   }
 
-  start(callback: Function): Promise<boolean> {
-    return SkylabReactNativeClient.start(callback);
+  start(): Promise<boolean> {
+    return SkylabReactNativeClient.start();
   }
 
-  setUser(user: SkylabUser, callback: Function): Promise<boolean> {
-    return SkylabReactNativeClient.setUser(user.payload, callback);
+  setUser(user: SkylabUser): Promise<boolean> {
+    return SkylabReactNativeClient.setUser(user.payload);
   }
 
   getVariant(flagKey: string, fallback?: Variant | string): Promise<boolean> {
@@ -32,7 +32,15 @@ export class Skylab {
     return SkylabReactNativeClient.getVariants();
   }
 
-  refetchAll(callback: Function): Promise<boolean> {
-    return SkylabReactNativeClient.refetchAll(callback);
+  refetchAll(): Promise<boolean> {
+    return SkylabReactNativeClient.refetchAll();
   }
+
+  /*setContextProvider(amplitudeInstanceName: string): Promise<boolean> {
+    return SkylabReactNativeClient.setContextProvider(amplitudeInstanceName);
+  }
+
+  setListener(callback: Function) : void {
+    SkylabReactNativeClient.setListener(callback);
+  }*/
 }

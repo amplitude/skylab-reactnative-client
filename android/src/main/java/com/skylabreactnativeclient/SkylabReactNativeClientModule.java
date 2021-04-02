@@ -48,7 +48,8 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     // Example method
     // See https://reactnative.dev/docs/native-modules-android
     @ReactMethod
-    public void init(String apiKey, ReadableMap config, Promise promise) throws JSONException {
+    public void init(String apiKey, Promise promise) throws JSONException {
+        /*
         Variant fallbackVariant = null;
         if (config.getType("fallbackVariant") == ReadableType.String) {
             fallbackVariant = new Variant(config.getString("fallbackVariant"));
@@ -60,8 +61,9 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
         SkylabConfig convertedConfig = SkylabConfig.builder()
                 .setFallbackVariant(fallbackVariant)
                 .setServerUrl(config.getString("serverUrl")).build();
+        */
         Skylab.init((Application) this.reactContext.getApplicationContext(), apiKey,
-                convertedConfig);
+            SkylabConfig());
     }
 
     @ReactMethod

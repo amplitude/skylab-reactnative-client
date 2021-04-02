@@ -1,5 +1,6 @@
 import Foundation
 import Skylab
+//import Amplitude
 
 @objc(SkylabReactNativeClient)
 class SkylabReactNativeClient: NSObject {
@@ -16,18 +17,15 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func start(_ callback: RCTResponseSenderBlock?,
-               resolver resolve: RCTPromiseResolveBlock,
-               rejecter reject: RCTPromiseRejectBlock) -> Void {
+    func start(  resolver resolve: RCTPromiseResolveBlock,
+                 rejecter reject: RCTPromiseRejectBlock) -> Void {
         let user = SkylabUser()
-        Skylab.getInstance()?.start(user: user, completion: {
-            callback?(["success"])
-        })
+        Skylab.getInstance()?.start(user: user, completion: {})
+        resolve(true)
     }
     
     @objc
     func setUser(_ user: [String: Any],
-                 callback: RCTResponseSenderBlock?,
                  resolver resolve: RCTPromiseResolveBlock,
                  rejecter reject: RCTPromiseRejectBlock) -> Void {
         let u = SkylabUser(deviceId: user["device_id"] as! String?,
@@ -47,9 +45,8 @@ class SkylabReactNativeClient: NSObject {
                            carrier: user["carrier"] as! String?,
                            userProperties: user["user_properties"] as! [String: String]?)
 
-        Skylab.getInstance()?.setUser(user: u, completion: {
-            callback?(["success"])
-        })
+        Skylab.getInstance()?.setUser(user: u, completion: {})
+        resolve(true)
     }
     
     @objc
@@ -81,8 +78,8 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func getVariants(resolver resolve: RCTPromiseResolveBlock,
-                     rejecter reject: RCTPromiseRejectBlock) -> Void {
+    func getVariants(  resolver resolve: RCTPromiseResolveBlock,
+                       rejecter reject: RCTPromiseRejectBlock) -> Void {
         let variants = Skylab.getInstance()?.getVariants()
         
         if let variantsList = variants {
@@ -100,11 +97,17 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func refetchAll(_ callback: RCTResponseSenderBlock?,
-                    resolver resolve: RCTPromiseResolveBlock,
-                    rejecter reject: RCTPromiseRejectBlock) -> Void {
-        Skylab.getInstance()?.refetchAll(completion: {
-            callback?(["success"])
-        })
+    func refetchAll(  resolver resolve: RCTPromiseResolveBlock,
+                      rejecter reject: RCTPromiseRejectBlock) -> Void {
+        Skylab.getInstance()?.refetchAll(completion: {})
+        resolve(true)
     }
+
+    /*@objc
+    func setContextProvider(_ amplitudeInstanceName: String,
+                              resolver resolve: RCTPromiseResolveBlock,
+                              rejecter reject: RCTPromiseRejectBlock) -> Void {
+        Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(Amplitude.getInstance(amplitudeInstanceName)));
+        resolve(true);
+    }*/
 }

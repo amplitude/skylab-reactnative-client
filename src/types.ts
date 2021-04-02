@@ -22,10 +22,12 @@ type Variant = {
   payload?: any;
 };
 export interface SkylabReactNativeClientModule {
-  initialize(apiKey: string): Promise<boolean>;
-  start(callback: Function): Promise<boolean>;
-  setUser(user: SkylabUser, callback: Function): Promise<boolean>;
+  initialize(apiKey: string): void;
+  start(): Promise<boolean>;
+  setUser(user: SkylabUser): Promise<boolean>;
   getVariant(flagKey: string, fallback?: Variant | string): Promise<boolean>;
   getVariants(): Promise<boolean>;
-  refetchAll(callback: Function): Promise<boolean>;
+  refetchAll(): Promise<boolean>;
+  //setContextProvider(amplitudeInstanceName: string): Promise<boolean>;
+  //setListener(callback: Function): void;
 }
