@@ -48,8 +48,8 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     // Example method
     // See https://reactnative.dev/docs/native-modules-android
     @ReactMethod
-    public void init(String apiKey, ReadableMap config, Promise promise) throws JSONException {
-        Variant fallbackVariant = null;
+    public void initialize(String apiKey, Promise promise) throws JSONException {
+        /*Variant fallbackVariant = null;
         if (config.getType("fallbackVariant") == ReadableType.String) {
             fallbackVariant = new Variant(config.getString("fallbackVariant"));
         } else if (config.getType("fallbackVariant") == ReadableType.Map) {
@@ -60,8 +60,10 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
         SkylabConfig convertedConfig = SkylabConfig.builder()
                 .setFallbackVariant(fallbackVariant)
                 .setServerUrl(config.getString("serverUrl")).build();
+                */
+        SkylabConfig convertedConfig = SkylabConfig.builder().build();
         Skylab.init((Application) this.reactContext.getApplicationContext(), apiKey,
-                convertedConfig);
+            convertedConfig);
     }
 
     @ReactMethod
@@ -83,16 +85,16 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getVariant(String flagKey, ReadableMap fallback, Promise promise) throws JSONException {
-        Variant fallbackVariant =
-                Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(fallback));
+    public void getVariantWithFallback(String flagKey, String fallback, Promise promise) throws JSONException {
+        Variant fallbackVariant = new Variant(fallback);
         Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
         promise.resolve(variantToMap(variant));
     }
 
     @ReactMethod
-    public void getVariant(String flagKey, String fallback, Promise promise) throws JSONException {
-        Variant fallbackVariant = new Variant(fallback);
+    public void getVariantWithFallbackPayload(String flagKey, ReadableMap fallback, Promise promise) throws JSONException {
+        Variant fallbackVariant =
+                Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(fallback));
         Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
         promise.resolve(variantToMap(variant));
     }
@@ -133,7 +135,7 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
             }
         });
     }
-
+ 
     // Conversion methods
     private SkylabUser convertSkylabUser(ReadableMap user) throws JSONException {
         SkylabUser convertedUser = SkylabUser.builder()

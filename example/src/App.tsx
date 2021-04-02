@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
 import { Skylab } from 'skylab-reactnative-client';
-
+import { initSkylab } from './utils/skylab';
+initSkylab();
 export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
-
   React.useEffect(() => {
     if (Skylab) {
       setResult(

@@ -1,5 +1,5 @@
 export class SkylabUser {
-  payload: Record<string, any>;
+  payload: Record<string, unknown>;
   constructor() {
     this.payload = {};
   }
@@ -20,7 +20,7 @@ export class SkylabUser {
     deviceModel?: string,
     carrier?: string,
     userProperties?: { [key: string]: string }
-  ): void {
+  ): Record<string, unknown> {
     this.payload.deviceId = deviceId;
     this.payload.userId = userId;
     this.payload.version = version;
@@ -37,5 +37,6 @@ export class SkylabUser {
     this.payload.device_model = deviceModel;
     this.payload.carrier = carrier;
     this.payload.user_properties = userProperties;
+    return this.payload;
   }
 }
