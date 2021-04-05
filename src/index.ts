@@ -1,58 +1,53 @@
 import { NativeModules } from 'react-native';
-import { SkylabUser } from './skylabUser';
-import { SkylabReactNativeClientModule } from './types';
+import {
+  SkylabConfig,
+  SkylabUser,
+  Variant,
+  Variants,
+  SkylabReactNativeClientModule,
+} from './types';
 
-type Variant = {
-  value: string;
-  payload?: any;
-};
+export { SkylabConfig, SkylabUser, Variant, Variants };
 
 const SkylabReactNativeClient: SkylabReactNativeClientModule =
   NativeModules.SkylabReactNativeClient;
 
-export { SkylabUser };
-export class Skylab {
-  init(apiKey: string): void {
-    SkylabReactNativeClient.initialize(apiKey);
-  }
+export const Skylab = {
+  init: async (apiKey: string, config?: SkylabConfig): Promise<boolean> => {
+    return SkylabReactNativeClient.initialize(apiKey, config);
+  },
 
-  start(user: SkylabUser): Promise<boolean> {
-    return SkylabReactNativeClient.start(user.payload);
-  }
+  start: async (user: SkylabUser): Promise<boolean> => {
+    return SkylabReactNativeClient.start(user);
+  },
 
-  setUser(user: SkylabUser): Promise<boolean> {
-    return SkylabReactNativeClient.setUser(user.payload);
-  }
+  setUser: async (user: SkylabUser): Promise<boolean> => {
+    return SkylabReactNativeClient.setUser(user);
+  },
 
-  getVariant(flagKey: string): Promise<boolean> {
-    //if (!fallback) {
-    // return SkylabReactNativeClient.getVariantNoFallback(flagKey);
-    //}
-    //console.log('2 element * ***** ');
-    return SkylabReactNativeClient.getVariant(flagKey);
-  }
-
-  getVariantWithFallback(flagKey: string, fallback: string): Promise<boolean> {
-    return SkylabReactNativeClient.getVariantWithFallback(flagKey, fallback);
-  }
-
-  getVariantWithFallbackPayload(
+  getVariant: async (
     flagKey: string,
-    fallback: Variant
-  ): Promise<boolean> {
-    return SkylabReactNativeClient.getVariantWithFallbackPayload(
-      flagKey,
-      fallback
-    );
-  }
+    fallback?: Variant | string
+  ): Promise<Variant> => {
+    if (typeof fallback === 'string') {
+      return SkylabReactNativeClient.getVariantWithFallback(flagKey, fallback);
+    } else if (fallback?.value != null) {
+      return SkylabReactNativeClient.getVariantWithFallbackPayload(
+        flagKey,
+        fallback
+      );
+    } else {
+      return SkylabReactNativeClient.getVariant(flagKey);
+    }
+  },
 
-  getVariants(): Promise<boolean> {
+  getVariants: async (): Promise<Variants> => {
     return SkylabReactNativeClient.getVariants();
-  }
+  },
 
-  refetchAll(): Promise<boolean> {
+  refetchAll: async (): Promise<boolean> => {
     return SkylabReactNativeClient.refetchAll();
-  }
+  },
 
   /*setContextProvider(amplitudeInstanceName: string): Promise<boolean> {
     return SkylabReactNativeClient.setContextProvider(amplitudeInstanceName);
@@ -61,4 +56,4 @@ export class Skylab {
   setListener(callback: Function) : void {
     SkylabReactNativeClient.setListener(callback);
   }*/
-}
+};

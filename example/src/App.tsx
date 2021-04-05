@@ -1,22 +1,48 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { Skylab } from 'skylab-reactnative-client';
-import { initSkylab } from './utils/skylab';
-initSkylab();
+import { Skylab, Variant, Variants } from 'skylab-reactnative-client';
+
 export default function App() {
-  const [result, setResult] = React.useState<string | undefined>();
+  const [variant, setVariant] = React.useState<Variant | undefined>();
+  const [fallbackResult, setFallbackResult] = React.useState<
+    Variant | undefined
+  >();
+  const [variantFallbackResult, setVariantFallbackResult] = React.useState<
+    Variant | undefined
+  >();
+  const [allVariants, setAllVariants] = React.useState<Variants | undefined>();
   React.useEffect(() => {
-    if (Skylab) {
-      setResult(
-        'Skylab Exists: ' + Object.getOwnPropertyNames(Skylab.prototype)
-      );
-    }
+    (async () => {
+      if (Skylab) {
+        await Skylab.init('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR');
+        await Skylab.start({ user_id: 'test@amplitude.com' });
+        setVariant(await Skylab.getVariant('react-native'));
+        setFallbackResult(
+          await Skylab.getVariant('flag-does-not-exist', 'fallback')
+        );
+        setVariantFallbackResult(
+          await Skylab.getVariant('flag-does-not-exist', { value: 'fallback' })
+        );
+        setAllVariants(await Skylab.getVariants());
+      }
+    })();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text style={styles.text}>react-native: {JSON.stringify(variant)}</Text>
+      <Text style={styles.text}>
+        'flag-does-not-exist' with string fallback:{' '}
+        {JSON.stringify(fallbackResult)}
+      </Text>
+      <Text style={styles.text}>
+        'flag-does-not-exist' with variant fallback:{' '}
+        {JSON.stringify(variantFallbackResult)}
+      </Text>
+      <Text style={styles.text}>
+        all variants: {JSON.stringify(allVariants)}
+      </Text>
     </View>
   );
 }
@@ -24,12 +50,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   box: {
     width: 60,
     height: 60,
+    marginVertical: 20,
+  },
+  text: {
     marginVertical: 20,
   },
 });

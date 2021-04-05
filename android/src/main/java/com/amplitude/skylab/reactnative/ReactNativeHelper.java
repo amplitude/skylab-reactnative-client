@@ -22,34 +22,35 @@ public class ReactNativeHelper {
     private static final String UNSUPPORTED_TYPE = "Unsupported data type";
 
     public static JSONObject convertMapToJson(ReadableMap value) throws JSONException {
+        if (value == null) {
+            return null;
+        }
         JSONObject properties = new JSONObject();
-        if (value != null) {
-            ReadableMapKeySetIterator iterator = value.keySetIterator();
-            while (iterator.hasNextKey()) {
-                String key = iterator.nextKey();
-                ReadableType valueType = value.getType(key);
-                switch (valueType) {
-                    case Null:
-                        properties.put(key, JSONObject.NULL);
-                        break;
-                    case Boolean:
-                        properties.put(key, value.getBoolean(key));
-                        break;
-                    case Number:
-                        properties.put(key, value.getDouble(key));
-                        break;
-                    case String:
-                        properties.put(key, value.getString(key));
-                        break;
-                    case Map:
-                        properties.put(key, convertMapToJson(value.getMap(key)));
-                        break;
-                    case Array:
-                        properties.put(key, convertArrayToJson(value.getArray(key)));
-                        break;
-                    default:
-                        throw new IllegalArgumentException(UNSUPPORTED_TYPE + valueType);
-                }
+        ReadableMapKeySetIterator iterator = value.keySetIterator();
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+            ReadableType valueType = value.getType(key);
+            switch (valueType) {
+                case Null:
+                    properties.put(key, JSONObject.NULL);
+                    break;
+                case Boolean:
+                    properties.put(key, value.getBoolean(key));
+                    break;
+                case Number:
+                    properties.put(key, value.getDouble(key));
+                    break;
+                case String:
+                    properties.put(key, value.getString(key));
+                    break;
+                case Map:
+                    properties.put(key, convertMapToJson(value.getMap(key)));
+                    break;
+                case Array:
+                    properties.put(key, convertArrayToJson(value.getArray(key)));
+                    break;
+                default:
+                    throw new IllegalArgumentException(UNSUPPORTED_TYPE + valueType);
             }
         }
         return properties;
@@ -60,6 +61,9 @@ public class ReactNativeHelper {
      * object.
      */
     public static JSONArray convertArrayToJson(ReadableArray value) throws JSONException {
+        if (value == null) {
+            return null;
+        }
         JSONArray properties = new JSONArray();
         for (int i = 0; i < value.size(); i++) {
             ReadableType valueType = value.getType(i);
@@ -93,7 +97,7 @@ public class ReactNativeHelper {
         WritableMap map = new WritableNativeMap();
         for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
             String key = it.next();
-            Object value = jsonObject.get("it");
+            Object value = jsonObject.get("value");
             if (value == null) {
                 map.putNull(key);
             } else if (value instanceof Boolean) {

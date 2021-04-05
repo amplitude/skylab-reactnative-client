@@ -10,16 +10,20 @@ class SkylabReactNativeClient: NSObject {
 
     @objc
     func initialize(_ apiKey: String,
+                    config: [String:Any]?,
                     resolver resolve: RCTPromiseResolveBlock,
                     rejecter reject: RCTPromiseRejectBlock) -> Void {
-        let config = SkylabConfig()
+        let config = SkylabConfig(
+            serverUrl:config?["serverUrl"] as! String? ?? SkylabConfig.Defaults.ServerUrl
+        )
         let _ = Skylab.initialize(apiKey: apiKey, config: config)
+        resolve(true)
     }
     
     @objc
     func start(_ user: [String: Any],
-                 resolver resolve: RCTPromiseResolveBlock,
-                 rejecter reject: RCTPromiseRejectBlock) -> Void {
+                 resolver resolve: @escaping RCTPromiseResolveBlock,
+                 rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
         let u = SkylabUser(deviceId: user["device_id"] as! String?,
                            userId: user["user_id"] as! String?,
                            version: user["version"] as! String?,
@@ -36,14 +40,15 @@ class SkylabReactNativeClient: NSObject {
                            deviceModel: user["device_model"] as! String?,
                            carrier: user["carrier"] as! String?,
                            userProperties: user["user_properties"] as! [String: String]?)
-        Skylab.getInstance()?.start(user: u, completion: {})
-        resolve(true)
+        Skylab.getInstance()?.start(user: u, completion:{
+            resolve(true);
+        })
     }
     
     @objc
     func setUser(_ user: [String: Any],
-                 resolver resolve: RCTPromiseResolveBlock,
-                 rejecter reject: RCTPromiseRejectBlock) -> Void {
+                 resolver resolve: @escaping RCTPromiseResolveBlock,
+                 rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
         let u = SkylabUser(deviceId: user["device_id"] as! String?,
                            userId: user["user_id"] as! String?,
                            version: user["version"] as! String?,
@@ -61,8 +66,9 @@ class SkylabReactNativeClient: NSObject {
                            carrier: user["carrier"] as! String?,
                            userProperties: user["user_properties"] as! [String: String]?)
 
-        Skylab.getInstance()?.setUser(user: u, completion: {})
-        resolve(true)
+        Skylab.getInstance()?.setUser(user: u, completion: {
+            resolve(true)
+        })
     }
     
     @objc
@@ -126,10 +132,11 @@ class SkylabReactNativeClient: NSObject {
     }
     
     @objc
-    func refetchAll(_ resolve: RCTPromiseResolveBlock,
-                      rejecter reject: RCTPromiseRejectBlock) -> Void {
-        Skylab.getInstance()?.refetchAll(completion: {})
-        resolve(true)
+    func refetchAll(_ resolve: @escaping RCTPromiseResolveBlock,
+                      rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+        Skylab.getInstance()?.refetchAll(completion: {
+            resolve(true)
+        })
     }
 
     /*@objc

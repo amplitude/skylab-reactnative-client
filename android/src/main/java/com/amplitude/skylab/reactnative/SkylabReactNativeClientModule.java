@@ -1,6 +1,7 @@
 package com.amplitude.skylab.reactnative;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -26,12 +27,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @ReactModule(name = SkylabReactNativeClientModule.NAME)
 public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     public static final String NAME = "SkylabReactNativeClient";
     private ReactApplicationContext reactContext;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public SkylabReactNativeClientModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -48,95 +52,165 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     // Example method
     // See https://reactnative.dev/docs/native-modules-android
     @ReactMethod
-    public void initialize(String apiKey, Promise promise) throws JSONException {
-        /*Variant fallbackVariant = null;
-        if (config.getType("fallbackVariant") == ReadableType.String) {
-            fallbackVariant = new Variant(config.getString("fallbackVariant"));
-        } else if (config.getType("fallbackVariant") == ReadableType.Map) {
-            fallbackVariant =
-                    Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(config.getMap(
-                    "fallbackVariant")));
+    public void initialize(String apiKey, ReadableMap config, Promise promise) {
+        try {
+            SkylabConfig convertedConfig = convertSkylabConfig(config);
+            Skylab.init((Application) this.reactContext.getApplicationContext(), apiKey,
+                    convertedConfig);
+            promise.resolve(true);
+        } catch (Exception e) {
+            promise.reject(e);
         }
-        SkylabConfig convertedConfig = SkylabConfig.builder()
-                .setFallbackVariant(fallbackVariant)
-                .setServerUrl(config.getString("serverUrl")).build();
-                */
-        SkylabConfig convertedConfig = SkylabConfig.builder().build();
-        Skylab.init((Application) this.reactContext.getApplicationContext(), apiKey,
-            convertedConfig);
     }
 
     @ReactMethod
-    public void start(ReadableMap user, Promise promise) throws JSONException {
-        Future<SkylabClient> future = Skylab.getInstance().start(convertSkylabUser(user));
-        promise.resolve(true);
-    }
-
-    @ReactMethod
-    public void setUser(ReadableMap user, Promise promise) throws JSONException {
-        Future<SkylabClient> future = Skylab.getInstance().setUser(convertSkylabUser(user));
-        promise.resolve(true);
-    }
-
-    @ReactMethod
-    public void getVariant(String flagKey, Promise promise) throws JSONException {
-        Variant variant = Skylab.getInstance().getVariant(flagKey);
-        promise.resolve(variantToMap(variant));
-    }
-
-    @ReactMethod
-    public void getVariantWithFallback(String flagKey, String fallback, Promise promise) throws JSONException {
-        Variant fallbackVariant = new Variant(fallback);
-        Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
-        promise.resolve(variantToMap(variant));
-    }
-
-    @ReactMethod
-    public void getVariantWithFallbackPayload(String flagKey, ReadableMap fallback, Promise promise) throws JSONException {
-        Variant fallbackVariant =
-                Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(fallback));
-        Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
-        promise.resolve(variantToMap(variant));
-    }
-
-    @ReactMethod
-    public void getVariants(Promise promise) throws JSONException {
-        WritableMap map = new WritableNativeMap();
-        Map<String, Variant> variants = Skylab.getInstance().getVariants();
-        for (Map.Entry<String, Variant> entry : variants.entrySet()) {
-            map.putMap(entry.getKey(), variantToMap(entry.getValue()));
+    public void start(ReadableMap user, Promise promise) {
+        try {
+            Future<SkylabClient> future = Skylab.getInstance().start(convertSkylabUser(user));
+            executorService.submit(() -> {
+                try {
+                    future.get();
+                    promise.resolve(true);
+                } catch (Exception e) {
+                    promise.reject(e);
+                }
+            });
+        } catch (Exception e) {
+            promise.reject(e);
         }
-        promise.resolve(map);
+    }
+
+    @ReactMethod
+    public void setUser(ReadableMap user, Promise promise) {
+        try {
+            Future<SkylabClient> future = Skylab.getInstance().setUser(convertSkylabUser(user));
+            executorService.submit(() -> {
+                try {
+                    future.get();
+                    promise.resolve(true);
+                } catch (Exception e) {
+                    promise.reject(e);
+                }
+            });
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void getVariant(String flagKey, Promise promise) {
+        try {
+            Variant variant = Skylab.getInstance().getVariant(flagKey);
+            promise.resolve(variantToMap(variant));
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void getVariantWithFallback(String flagKey, String fallback, Promise promise) {
+        try {
+            Log.i(NAME, flagKey + " " + fallback);
+            Variant fallbackVariant = new Variant(fallback);
+            Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
+            Log.i(NAME, String.valueOf(variant.value));
+            promise.resolve(variantToMap(variant));
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void getVariantWithFallbackPayload(String flagKey, ReadableMap fallback,
+                                              Promise promise) {
+        try {
+            Variant fallbackVariant =
+                    Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(fallback));
+            Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
+            promise.resolve(variantToMap(variant));
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void getVariants(Promise promise) {
+        try {
+            WritableMap map = new WritableNativeMap();
+            Map<String, Variant> variants = Skylab.getInstance().getVariants();
+            for (Map.Entry<String, Variant> entry : variants.entrySet()) {
+                map.putMap(entry.getKey(), variantToMap(entry.getValue()));
+            }
+            promise.resolve(map);
+        } catch (Exception e) {
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
     public void refetchAll(Promise promise) {
-        Future<SkylabClient> future = Skylab.getInstance().refetchAll();
-        promise.resolve(true);
+        try {
+            Future<SkylabClient> future = Skylab.getInstance().refetchAll();
+            executorService.submit(() -> {
+                try {
+                    future.get();
+                    promise.resolve(true);
+                } catch (Exception e) {
+                    promise.reject(e);
+                }
+            });
+        } catch (Exception e) {
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
     public void setContextProvider(String amplitudeInstanceName, Promise promise) {
-        Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(Amplitude.getInstance(amplitudeInstanceName)));
-        promise.resolve(true);
+        try {
+            Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(Amplitude.getInstance(amplitudeInstanceName)));
+            promise.resolve(true);
+        } catch (Exception e) {
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
-    public void setListener(Callback listener) {
-        Skylab.getInstance().setListener((skylabUser, variants) -> {
-            try {
-                WritableMap map = new WritableNativeMap();
-                for (Map.Entry<String, Variant> entry : variants.entrySet()) {
-                    map.putMap(entry.getKey(), variantToMap(entry.getValue()));
-                }
-                listener.invoke(map);
-            } catch (JSONException e) {
+    public void setListener(Callback listener, Promise promise) {
+        try {
+            Skylab.getInstance().setListener((skylabUser, variants) -> {
+                try {
+                    WritableMap map = new WritableNativeMap();
+                    for (Map.Entry<String, Variant> entry : variants.entrySet()) {
+                        map.putMap(entry.getKey(), variantToMap(entry.getValue()));
+                    }
+                    listener.invoke(map);
+                } catch (JSONException e) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            promise.reject(e);
+        }
     }
- 
+
     // Conversion methods
+    private SkylabConfig convertSkylabConfig(ReadableMap config) throws JSONException {
+        Variant fallbackVariant = null;
+        SkylabConfig.Builder builder = SkylabConfig.builder();
+        if (config != null) {
+            if (config.getType("fallbackVariant") == ReadableType.String) {
+                fallbackVariant = new Variant(config.getString("fallbackVariant"));
+            } else if (config.getType("fallbackVariant") == ReadableType.Map) {
+                fallbackVariant =
+                        Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(config.getMap(
+                                "fallbackVariant")));
+            }
+            builder.setFallbackVariant(fallbackVariant)
+                    .setServerUrl(config.getString("serverUrl"));
+        }
+        return builder.build();
+    }
+
     private SkylabUser convertSkylabUser(ReadableMap user) throws JSONException {
         SkylabUser convertedUser = SkylabUser.builder()
                 .setDeviceId(user.getString(SkylabUser.DEVICE_ID))
@@ -162,11 +236,13 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
 
     private WritableMap variantToMap(Variant variant) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        if (variant.value != null) {
-            jsonObject.put("value", variant.value);
-        }
-        if (variant.payload != null) {
-            jsonObject.put("payload", variant.payload);
+        if (variant != null) {
+            if (variant.value != null) {
+                jsonObject.put("value", variant.value);
+            }
+            if (variant.payload != null) {
+                jsonObject.put("payload", variant.payload);
+            }
         }
         return ReactNativeHelper.convertJsonToMap(jsonObject);
     }
