@@ -1,6 +1,6 @@
 import Foundation
 import Skylab
-//import Amplitude
+import Amplitude
 
 @objc(SkylabReactNativeClient)
 class SkylabReactNativeClient: NSObject {
@@ -139,11 +139,13 @@ class SkylabReactNativeClient: NSObject {
         })
     }
 
-    /*@objc
-    func setContextProvider(_ amplitudeInstanceName: String,
+    @objc
+    func setAmplitudeContextProvider(_ amplitudeInstanceName: String?,
                               resolver resolve: RCTPromiseResolveBlock,
                               rejecter reject: RCTPromiseRejectBlock) -> Void {
-        Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(Amplitude.getInstance(amplitudeInstanceName)));
+        let amplitudeInstance = Amplitude.instance();
+        let contextProvider = AmplitudeContextProvider(amplitudeInstance)
+        let _ = Skylab.getInstance()?.setContextProvider(contextProvider)
         resolve(true);
-    }*/
+    }
 }

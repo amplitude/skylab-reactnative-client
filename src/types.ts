@@ -48,6 +48,5 @@ export interface SkylabReactNativeClientModule {
   ): Promise<Variant>;
   getVariants(): Promise<Variants>;
   refetchAll(): Promise<boolean>;
-  //setContextProvider(amplitudeInstanceName: string): Promise<boolean>;
-  //setListener(callback: Function): void;
+  setAmplitudeContextProvider(amplitudeInstanceName?: string): Promise<boolean>;
 }

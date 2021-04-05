@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@amplitude/react-native@^2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@amplitude/react-native/-/react-native-2.0.12.tgz#64068eb945c776f5b778e375b10c54a614700bd1"
+  integrity sha512-ZB6w87Z9ldZHQM55pr6vED02ttBFExiJx//L/cJRqR7uhHGPhXEILt9WPH1F1uZZBGcvXGWtxLLIa5bv+2dTxA==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.13.tgz#dcfc826beef65e75c50e21d3837d7d95798dd658"

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
+import { Amplitude } from '@amplitude/react-native';
 import { Skylab, Variant, Variants } from 'skylab-reactnative-client';
 
 export default function App() {
@@ -14,8 +15,13 @@ export default function App() {
   const [allVariants, setAllVariants] = React.useState<Variants | undefined>();
   React.useEffect(() => {
     (async () => {
+      if (Amplitude) {
+        const amplitude = Amplitude.getInstance();
+        amplitude.init('a6dd847b9d2f03c816d4f3f8458cdc1d');
+      }
       if (Skylab) {
         await Skylab.init('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR');
+        await Skylab.setAmplitudeContextProvider();
         await Skylab.start({ user_id: 'test@amplitude.com' });
         setVariant(await Skylab.getVariant('react-native'));
         setFallbackResult(

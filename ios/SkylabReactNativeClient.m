@@ -18,6 +18,6 @@ RCT_EXTERN_METHOD(getVariants: (RCTPromiseResolveBlock)resolve rejecter:(RCTProm
 
 RCT_EXTERN_METHOD(refetchAll: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
-//RCT_EXTERN_METHOD(setContextProvider:(NSString *)amplitudeInstanceName resolver(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(setAmplitudeContextProvider:(NSString *)amplitudeInstanceName resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 
 @end

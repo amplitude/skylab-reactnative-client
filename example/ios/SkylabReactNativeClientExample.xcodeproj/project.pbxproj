@@ -414,6 +414,7 @@
 				"${BUILT_PRODUCTS_DIR}/ReactCommon/ReactCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/Skylab/Skylab.framework",
 				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
+				"${BUILT_PRODUCTS_DIR}/amplitude-react-native/amplitude_react_native.framework",
 				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
 				"${BUILT_PRODUCTS_DIR}/skylab-reactnative-client/skylab_reactnative_client.framework",
 			);
@@ -441,6 +442,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Skylab.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/amplitude_react_native.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/skylab_reactnative_client.framework",
 			);

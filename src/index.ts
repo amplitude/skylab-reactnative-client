@@ -49,11 +49,11 @@ export const Skylab = {
     return SkylabReactNativeClient.refetchAll();
   },
 
-  /*setContextProvider(amplitudeInstanceName: string): Promise<boolean> {
-    return SkylabReactNativeClient.setContextProvider(amplitudeInstanceName);
-  }
-
-  setListener(callback: Function) : void {
-    SkylabReactNativeClient.setListener(callback);
-  }*/
+  setAmplitudeContextProvider(
+    amplitudeInstanceName?: string
+  ): Promise<boolean> {
+    return SkylabReactNativeClient.setAmplitudeContextProvider(
+      amplitudeInstanceName
+    );
+  },
 };

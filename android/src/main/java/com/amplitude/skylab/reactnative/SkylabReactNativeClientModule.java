@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.amplitude.api.Amplitude;
+import com.amplitude.api.AmplitudeClient;
 import com.amplitude.api.AmplitudeContextProvider;
 import com.amplitude.skylab.Skylab;
 import com.amplitude.skylab.SkylabClient;
@@ -110,10 +111,8 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getVariantWithFallback(String flagKey, String fallback, Promise promise) {
         try {
-            Log.i(NAME, flagKey + " " + fallback);
             Variant fallbackVariant = new Variant(fallback);
             Variant variant = Skylab.getInstance().getVariant(flagKey, fallbackVariant);
-            Log.i(NAME, String.valueOf(variant.value));
             promise.resolve(variantToMap(variant));
         } catch (Exception e) {
             promise.reject(e);
@@ -165,9 +164,12 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setContextProvider(String amplitudeInstanceName, Promise promise) {
+    public void setAmplitudeContextProvider(String amplitudeInstanceName, Promise promise) {
         try {
-            Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(Amplitude.getInstance(amplitudeInstanceName)));
+            AmplitudeClient amplitudeInstance = Amplitude.getInstance(amplitudeInstanceName);
+            if (amplitudeInstance != null) {
+                Skylab.getInstance().setContextProvider(new AmplitudeContextProvider(amplitudeInstance));
+            }
             promise.resolve(true);
         } catch (Exception e) {
             promise.reject(e);
