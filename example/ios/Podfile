@@ -12,7 +12,7 @@ target 'SkylabReactNativeClientExample' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'skylab-reactnative-client', :path => '../..'
-  pod 'Skylab', :git => 'https://github.com/amplitude/skylab-ios-client', :tag => 'v1.0.1'
+  pod 'AmplitudeSkylab'
   
   # Enables Flipper.
   #

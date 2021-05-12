@@ -1,5 +1,5 @@
 import Foundation
-import Skylab
+import AmplitudeSkylab
 import Amplitude
 
 @objc(SkylabReactNativeClient)

@@ -3,6 +3,8 @@ PODS:
   - amplitude-react-native (2.0.12):
     - Amplitude (= 8.2.0)
     - React-Core
+  - AmplitudeSkylab (1.0.2):
+    - Amplitude
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.63.4)
@@ -249,15 +251,14 @@ PODS:
     - React-Core (= 0.63.4)
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
-  - Skylab (1.0.1):
-    - Amplitude
-  - skylab-reactnative-client (0.1.0):
+  - skylab-reactnative-client (0.2.0):
+    - AmplitudeSkylab
     - React-Core
-    - Skylab
   - Yoga (1.14.0)
 
 DEPENDENCIES:
   - "amplitude-react-native (from `../node_modules/@amplitude/react-native`)"
+  - AmplitudeSkylab
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -285,13 +286,13 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - Skylab (from `https://github.com/amplitude/skylab-ios-client`, tag `v1.0.1`)
   - skylab-reactnative-client (from `../..`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - Amplitude
+    - AmplitudeSkylab
     - boost-for-react-native
 
 EXTERNAL SOURCES:
@@ -347,22 +348,15 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  Skylab:
-    :git: https://github.com/amplitude/skylab-ios-client
-    :tag: v1.0.1
   skylab-reactnative-client:
     :path: "../.."
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
-CHECKOUT OPTIONS:
-  Skylab:
-    :git: https://github.com/amplitude/skylab-ios-client
-    :tag: v1.0.1
-
 SPEC CHECKSUMS:
   Amplitude: 263118b9e691e73a1c864b05bb08a3aff3636d16
   amplitude-react-native: c09a45650c3dd8bdef5da277721b9cb7b54d391b
+  AmplitudeSkylab: f2cafb9db5a759ca25a2b731187a0fbb6038bdf4
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
@@ -389,10 +383,9 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  Skylab: 05e578f9dc0a19186a0165b774c03a17ea1b894b
-  skylab-reactnative-client: 43de0ccae1235e15f7b9a325e1a43a23658ee3c0
+  skylab-reactnative-client: f8814c70b2fe6695c45745a71013176043e04a19
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 01b7e2f2a8c3d56ea653d5e905b771017e91e64e
+PODFILE CHECKSUM: 44181133bb500c16908cb1df97449376257c3a35
 
 COCOAPODS: 1.10.1
