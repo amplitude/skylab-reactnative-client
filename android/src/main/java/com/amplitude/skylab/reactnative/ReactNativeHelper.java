@@ -97,7 +97,7 @@ public class ReactNativeHelper {
         WritableMap map = new WritableNativeMap();
         for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
             String key = it.next();
-            Object value = jsonObject.get("value");
+            Object value = jsonObject.get(key);
             if (value == null) {
                 map.putNull(key);
             } else if (value instanceof Boolean) {
