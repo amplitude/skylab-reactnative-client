@@ -12,6 +12,10 @@ export default function App() {
   const [variantFallbackResult, setVariantFallbackResult] = React.useState<
     Variant | undefined
   >();
+  const [
+    variantWithPayloadResult,
+    setVariantWithPayloadResult,
+  ] = React.useState<Variant | undefined>();
   const [allVariants, setAllVariants] = React.useState<Variants | undefined>();
   React.useEffect(() => {
     (async () => {
@@ -22,7 +26,7 @@ export default function App() {
       if (Skylab) {
         await Skylab.init('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR');
         await Skylab.setAmplitudeContextProvider();
-        await Skylab.start({ user_id: 'test@amplitude.com' });
+        await Skylab.start();
         setVariant(await Skylab.getVariant('react-native'));
         setFallbackResult(
           await Skylab.getVariant('flag-does-not-exist', 'fallback')
@@ -30,6 +34,7 @@ export default function App() {
         setVariantFallbackResult(
           await Skylab.getVariant('flag-does-not-exist', { value: 'fallback' })
         );
+        setVariantWithPayloadResult(await Skylab.getVariant('android-demo'));
         setAllVariants(await Skylab.getVariants());
       }
     })();
@@ -45,6 +50,9 @@ export default function App() {
       <Text style={styles.text}>
         'flag-does-not-exist' with variant fallback:{' '}
         {JSON.stringify(variantFallbackResult)}
+      </Text>
+      <Text style={styles.text}>
+        variant-with-payload: {JSON.stringify(variantWithPayloadResult)}
       </Text>
       <Text style={styles.text}>
         all variants: {JSON.stringify(allVariants)}

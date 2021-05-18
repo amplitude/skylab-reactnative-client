@@ -17,8 +17,8 @@ export const Skylab = {
     return SkylabReactNativeClient.initialize(apiKey, config);
   },
 
-  start: async (user: SkylabUser): Promise<boolean> => {
-    return SkylabReactNativeClient.start(user);
+  start: async (user?: SkylabUser): Promise<boolean> => {
+    return SkylabReactNativeClient.start(user ?? {});
   },
 
   setUser: async (user: SkylabUser): Promise<boolean> => {
