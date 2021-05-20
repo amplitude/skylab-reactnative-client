@@ -1,6 +1,6 @@
 {
   "name": "skylab-reactnative-client",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Official Skylab React Native Client",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
