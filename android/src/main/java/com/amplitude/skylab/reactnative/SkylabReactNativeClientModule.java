@@ -199,39 +199,57 @@ public class SkylabReactNativeClientModule extends ReactContextBaseJavaModule {
         Variant fallbackVariant = null;
         SkylabConfig.Builder builder = SkylabConfig.builder();
         if (config != null) {
-            if (config.getType("fallbackVariant") == ReadableType.String) {
-                fallbackVariant = new Variant(config.getString("fallbackVariant"));
-            } else if (config.getType("fallbackVariant") == ReadableType.Map) {
-                fallbackVariant =
-                        Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(config.getMap(
-                                "fallbackVariant")));
+            if (config.hasKey("fallbackVariant")) {
+                if (config.getType("fallbackVariant") == ReadableType.String) {
+                    fallbackVariant = new Variant(config.getString("fallbackVariant"));
+                } else if (config.getType("fallbackVariant") == ReadableType.Map) {
+                    fallbackVariant =
+                            Variant.fromJsonObject(ReactNativeHelper.convertMapToJson(config.getMap(
+                                    "fallbackVariant")));
+                }
             }
-            builder.setFallbackVariant(fallbackVariant)
-                    .setServerUrl(config.getString("serverUrl"));
+            if (config.hasKey("serverUrl")) {
+                builder.setFallbackVariant(fallbackVariant)
+                        .setServerUrl(config.getString("serverUrl"));
+            }
         }
         return builder.build();
     }
 
+    private String safeGetString(ReadableMap map, String key) {
+        if (map.hasKey(key)) {
+            return map.getString(key);
+        }
+        return null;
+    }
+
+    private ReadableMap safeGetMap(ReadableMap map, String key) {
+        if (map.hasKey(key)) {
+            return map.getMap(key);
+        }
+        return null;
+    }
+
     private SkylabUser convertSkylabUser(ReadableMap user) throws JSONException {
         SkylabUser convertedUser = SkylabUser.builder()
-                .setDeviceId(user.getString(SkylabUser.DEVICE_ID))
-                .setUserId(user.getString(SkylabUser.USER_ID))
-                .setVersion(user.getString(SkylabUser.VERSION))
-                .setCountry(user.getString(SkylabUser.COUNTRY))
-                .setRegion(user.getString(SkylabUser.REGION))
-                .setDma(user.getString(SkylabUser.DMA))
-                .setCity(user.getString(SkylabUser.CITY))
-                .setLanguage(user.getString(SkylabUser.LANGUAGE))
-                .setPlatform(user.getString(SkylabUser.PLATFORM))
-                .setOs(user.getString(SkylabUser.OS))
-                .setDeviceFamily(user.getString(SkylabUser.DEVICE_FAMILY))
-                .setDeviceType(user.getString(SkylabUser.DEVICE_TYPE))
-                .setDeviceBrand(user.getString(SkylabUser.DEVICE_BRAND))
-                .setDeviceManufacturer(user.getString(SkylabUser.DEVICE_MANUFACTURER))
-                .setDeviceModel(user.getString(SkylabUser.DEVICE_MODEL))
-                .setCarrier(user.getString(SkylabUser.CARRIER))
-                .setLibrary(user.getString(SkylabUser.LIBRARY))
-                .setUserProperties(ReactNativeHelper.convertMapToJson(user.getMap(SkylabUser.USER_PROPERTIES))).build();
+                .setDeviceId(safeGetString(user, SkylabUser.DEVICE_ID))
+                .setUserId(safeGetString(user, SkylabUser.USER_ID))
+                .setVersion(safeGetString(user, SkylabUser.VERSION))
+                .setCountry(safeGetString(user, SkylabUser.COUNTRY))
+                .setRegion(safeGetString(user, SkylabUser.REGION))
+                .setDma(safeGetString(user, SkylabUser.DMA))
+                .setCity(safeGetString(user, SkylabUser.CITY))
+                .setLanguage(safeGetString(user, SkylabUser.LANGUAGE))
+                .setPlatform(safeGetString(user, SkylabUser.PLATFORM))
+                .setOs(safeGetString(user, SkylabUser.OS))
+                .setDeviceFamily(safeGetString(user, SkylabUser.DEVICE_FAMILY))
+                .setDeviceType(safeGetString(user, SkylabUser.DEVICE_TYPE))
+                .setDeviceBrand(safeGetString(user, SkylabUser.DEVICE_BRAND))
+                .setDeviceManufacturer(safeGetString(user, SkylabUser.DEVICE_MANUFACTURER))
+                .setDeviceModel(safeGetString(user, SkylabUser.DEVICE_MODEL))
+                .setCarrier(safeGetString(user, SkylabUser.CARRIER))
+                .setLibrary(safeGetString(user, SkylabUser.LIBRARY))
+                .setUserProperties(ReactNativeHelper.convertMapToJson(safeGetMap(user, SkylabUser.USER_PROPERTIES))).build();
         return convertedUser;
     }
 
